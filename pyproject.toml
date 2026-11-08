@@ -7,7 +7,7 @@ name = "guard.rails"
 version = "0.1.0"
 description = "Defensive checks for LLM input and output: PII redaction with Luhn-validated cards, prompt-injection scoring, and policy verdicts. Dependency-free Python."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [{ name = "AndMaverick LLC" }]
 
