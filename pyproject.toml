@@ -4,8 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "guard.rails"
-version = "0.1.0"
-description = "Defensive checks for LLM input and output: PII redaction with Luhn-validated cards, prompt-injection scoring, and policy verdicts. Dependency-free Python."
+version = "0.2.0"
+description = "Defensive checks for LLM input and output: checksum-validated PII and secret redaction (Gulf, Indonesian, UK, US identifiers), multilingual prompt-injection scoring, reversible pseudonyms, chunk-safe stream redaction. Dependency-free Python."
+classifiers = ["Typing :: Typed", "Programming Language :: Python :: 3", "License :: OSI Approved :: MIT License"]
+keywords = ["llm", "pii", "redaction", "prompt-injection", "guardrails", "security"]
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
@@ -13,3 +15,21 @@ authors = [{ name = "AndMaverick LLC" }]
 
 [tool.setuptools.packages.find]
 include = ["guard_rails*"]
+
+[tool.setuptools.package-data]
+guard_rails = ["py.typed"]
+
+[project.scripts]
+guard-rails = "guard_rails.cli:main"
+
+[tool.ruff]
+line-length = 130
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "C4", "SIM"]
+ignore = ["E501"]
+
+[tool.mypy]
+strict = true
+files = ["guard_rails"]
