@@ -68,12 +68,12 @@ python -m guard_rails check --block-pii out.txt && echo ok
 | SAUDI_ID | 10 digits, starts 1 or 2, Luhn (citizen and iqama) |
 | NIK | Indonesian ID: 16 digits, real province, valid birth date (day plus 40 for women) |
 | SSN, NINO | US and UK structure rules |
-| EMAIL, IP, PHONE | pattern, with length and neighbour-digit checks |
-| Secrets | private key blocks, JWT, AWS, GitHub, Slack, Stripe, Google, Anthropic and OpenAI-style keys |
+| EMAIL, IP, PHONE | pattern, with length and checks on the digits around a match |
+| Secrets | private key blocks, JWT, AWS, GitHub, Slack, Stripe, Google, Anthropic and keys in the style of OpenAI |
 
-Arabic-Indic and Persian digits are folded before matching, and positions refer to the original text, so a message in any script keeps its own words. Where two detectors claim the same span, the more specific one wins, so an Emirates ID is reported once as an Emirates ID.
+Eastern Arabic and Persian digits are folded before matching, and positions refer to the original text, so a message in any script keeps its own words. Where two detectors claim the same span, the more specific one wins, so an Emirates ID is reported once as an Emirates ID.
 
-Injection scoring covers English, Spanish, French, German, Portuguese, Italian, Indonesian, Turkish, Russian, Arabic, Persian, Hindi, Chinese, Japanese and Korean, plus role-tag spoofing, template markers and markdown-image exfiltration. Zero-width characters, bidirectional controls, compatibility forms and Cyrillic or Greek look-alike letters are normalised first.
+Injection scoring covers English, Spanish, French, German, Portuguese, Italian, Indonesian, Turkish, Russian, Arabic, Persian, Hindi, Chinese, Japanese and Korean, plus spoofed role tags, template markers and data leaving in markdown images. Zero width characters, bidirectional controls, compatibility forms and Cyrillic or Greek lookalike letters are normalised first.
 
 ## Honest limits
 
