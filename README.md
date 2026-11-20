@@ -89,7 +89,7 @@ These are heuristics, and this is not a security boundary.
 
 ## What to put behind it
 
-A filter reads text and guesses. Something has to hold when the guess is wrong. The strongest answer is to stop an agent that reads untrusted text from also holding the tools. [`mao.handoff`](https://github.com/AndMaverick/mao-framework/blob/main/docs/HANDOFF.md) in mao-framework does that: the reading agent may hand over only a label from a fixed list, a severity from a fixed list and bounded line numbers, so there is no field for a hidden instruction to travel in. That document also lists what the contract does not guarantee.
+A filter reads text and guesses. Something has to hold when the guess is wrong. The strongest answer is to stop an agent that reads untrusted text from also holding the tools. [`mao.handoff`](https://github.com/AndMaverick/mao-framework/blob/main/docs/HANDOFF.md) in mao-framework does that: the reading agent may hand over only a label from a fixed list, a severity from a fixed list and bounded line numbers, so there is no field for a hidden instruction to travel in. That document also lists what the contract does not guarantee. [Closed Values: Hand Off Contracts for Untrusted Agents](https://coderlegion.com/35393/closed-values-hand-off-contracts-for-untrusted-agents) explains the design.
 
 ## Tests
 
