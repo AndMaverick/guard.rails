@@ -2,7 +2,11 @@
 
 [![CI](https://github.com/AndMaverick/guard.rails/actions/workflows/ci.yml/badge.svg)](https://github.com/AndMaverick/guard.rails/actions/workflows/ci.yml)
 
-Defensive checks for text going into and coming out of a language model. Personal data and secrets are found with the checksum or structure that real identifiers have, so order numbers and timestamps are left alone. Prompt injection is scored in fifteen languages. Standard library only, typed, Python 3.10 and up.
+Text crosses a trust boundary twice in a language model system. It goes in, written by customers, by strangers and by whoever filed the last support ticket. It comes out, carrying whatever the model was shown, including card numbers and keys that someone pasted into a chat. Each crossing fails in its own way, and a check at each one costs very little.
+
+guard.rails is that check. Personal data and secrets are found with the checksum or structure that real identifiers have, so order numbers and timestamps are left alone. Prompt injection is scored in fifteen languages. Standard library only, typed, Python 3.10 and up.
+
+It lowers the odds. It does not close the door. The limits below say where it stops, and the section after them says what to put behind it.
 
 ```
 pip install git+https://github.com/AndMaverick/guard.rails
@@ -63,7 +67,7 @@ python -m guard_rails check --block-pii out.txt && echo ok
 | Kind | Rule |
 |---|---|
 | CARD | 13 to 19 digits, Luhn |
-| IBAN | ISO 13616 mod-97 (UAE, Saudi, UK, EU and the rest) |
+| IBAN | ISO 13616 mod 97 (UAE, Saudi, UK, EU and the rest) |
 | EMIRATES_ID | 15 digits, starts 784, Luhn |
 | SAUDI_ID | 10 digits, starts 1 or 2, Luhn (citizen and iqama) |
 | NIK | Indonesian ID: 16 digits, real province, valid birth date (day plus 40 for women) |
@@ -82,6 +86,10 @@ These are heuristics, and this is not a security boundary.
 - An identifier that passes its checksum is well formed. It is not proven to belong to a person, and a person's name or address has no checksum, so names and street addresses are not detected.
 - A clean injection score means nothing obvious was found. An attacker who rephrases gets past phrase rules. Keep the real controls (scope, risk tier, human approval) in the layer that acts, for example the Action layer in [mao-framework](https://github.com/AndMaverick/mao-framework), and use `guard_verifier` there to fail a step whose output breaks policy.
 - Credential detection covers common formats. A key in a custom format is not found unless you add a `Detector`.
+
+## What to put behind it
+
+A filter reads text and guesses. Something has to hold when the guess is wrong. The strongest answer is to stop an agent that reads untrusted text from also holding the tools. [`mao.handoff`](https://github.com/AndMaverick/mao-framework/blob/main/docs/HANDOFF.md) in mao-framework does that: the reading agent may hand over only a label from a fixed list, a severity from a fixed list and bounded line numbers, so there is no field for a hidden instruction to travel in. That document also lists what the contract does not guarantee.
 
 ## Tests
 
